@@ -40,9 +40,21 @@ Once you have run your analysis, the necessary files have been created. Now, you
 When you restart an analysis, Abaqus creates a new output database file (job-name.odb) and a new results file (job-name.fil), and writes output data to those files. To merge the original and new .odb and .fil files, use the [`abaqus restartjoin`](https://abaqus-docs.mit.edu/2017/English/SIMACAEEXCRefMap/simaexc-c-restartjoinproc.htm) and [`abaqus append`](https://abaqus-docs.mit.edu/2017/English/SIMACAEEXCRefMap/simaexc-c-appendfil.htm) commands, respectively. Example:
 
 ```
-abaqus restartjoin originalodb=Job-1.odf restartodb=Job-1_res.odb
+abaqus restartjoin originalodb=Job-1.odb restartodb=Job-1_restart.odb copyoriginal
 ```
+gives
 ```
-abaqus append job=job-name oldjob=oldjob-name input=input-file
+Copying the original odb file (Job-1.odb) to Restart_Job-1.odb.
+The joined ODB file will be in Restart_Job-1.odb.
+To prevent inconsistent history output, all history values will be removed from the joined ODB file.
+Merging sets...
+Set merge complete.
+Merging steps...
+Merging step step from the original ODB file and step step from the restart ODB file.
+Step merge complete.
 ```
+Alternatively, you can execute the [**merge_odb.sh**](scripts/merge_odb.sh) script found in the *scripts/* directory.
+
+
+
 Note that a restart analysis in Abaqus must be run on a computer that is binary compatible with the computer used to  generate the restart files.
